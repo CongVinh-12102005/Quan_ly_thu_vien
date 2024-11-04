@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        BookManager bookManager = new BookManager(); // Khởi tạo BookManager
+        BookManager bookManager = new BookManager(); 
         int choice;
 
         do {
@@ -22,7 +22,7 @@ public class Main {
             } catch (InputMismatchException e) {
                 System.out.println("Vui long nhap so hop le!");
                 sc.nextLine();  // Xóa bộ đệm để tránh lỗi lặp lại
-                choice = 0;     // Đặt giá trị mặc định để tiếp tục vòng lặp
+                choice = 0;     
             }
 
             switch (choice) {

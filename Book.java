@@ -23,12 +23,10 @@ public abstract class Book {
     // Constructor mặc định
     public Book() {}
 
-    // Phương thức để cập nhật tình trạng sách
     protected String capNhatTinhTrang() {
-        return soLuong > 0 ? "Còn hàng" : "Hết hàng";
+        return soLuong > 0 ? "Con hang" : "Het hang";
     }
 
-    // Getter và Setter cho các thuộc tính
     public String getMaSach() {
         return maSach;
     }
@@ -83,14 +81,14 @@ public abstract class Book {
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
-        this.tinhTrang = capNhatTinhTrang(); // Cập nhật lại tình trạng khi thay đổi số lượng
+        this.tinhTrang = capNhatTinhTrang(); 
     }
 
     public String getTinhTrang() {
         return tinhTrang;
     }
 
-    // Các phương thức trừu tượng cần triển khai trong các lớp con
+    // Các hàm trừu tượng 
     public abstract void nhap();
     public abstract void xuat();
 }

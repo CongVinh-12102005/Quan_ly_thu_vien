@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BookManager {
-    private List<Book> books; // Sử dụng List để quản lý sách
+    private List<Book> books; 
     private Scanner sc;
-    private final String filePath = "book.txt"; // Đường dẫn đến file lưu trữ sách
+    private final String filePath = "book.txt"; 
 
     public BookManager() {
         books = new ArrayList<>();
@@ -20,22 +20,22 @@ public class BookManager {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
-                String maSach = data[0];
-                String tenSach = data[1];
-                String tacGia = data[2];
-                String loaiSach = data[3];
-                String nhaXuatBan = data[4];
-                String nhaCungCap = data[5];
-                int soLuong = Integer.parseInt(data[6]);
+                String maSach = data[0].trim();
+                String tenSach = data[1].trim();
+                String tacGia = data[2].trim();
+                String loaiSach = data[3].trim();
+                String nhaXuatBan = data[4].trim();
+                String nhaCungCap = data[5].trim();
+                int soLuong = Integer.parseInt(data[6].trim());
 
                 if (loaiSach.equals("SGK")) {
-                    String soLop = data[7];
+                    String soLop = data[7].trim();
                     books.add(new SGK(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLuong, soLop));
                 } else if (loaiSach.equals("Truyen")) {
-                    String theLoai = data[7];
+                    String theLoai = data[7].trim();
                     books.add(new Truyen(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLuong, theLoai));
                 } else if (loaiSach.equals("GiaoTrinh")) {
-                    String monHoc = data[7];
+                    String monHoc = data[7].trim();
                     books.add(new GiaoTrinh(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLuong, monHoc));
                 }
             }
@@ -78,53 +78,50 @@ public class BookManager {
         System.out.println("1. Sach giao khoa (SGK)");
         System.out.println("2. Truyen");
         System.out.println("3. Giao trinh");
-        
+        System.out.print("Chon loai sach:");
         int choice = sc.nextInt();
         sc.nextLine(); // Đọc bỏ dòng xuống hàng
-
-        String maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLop = null, monHoc = null, theLoai = null;
-        int soLuong;
-
-        System.out.print("Nhap ma sach: ");
-        maSach = sc.nextLine();
-        System.out.print("Nhap ten sach: ");
-        tenSach = sc.nextLine();
-        System.out.print("Nhap tac gia: ");
-        tacGia = sc.nextLine();
-        System.out.print("Nhap loai sach: ");
-        loaiSach = sc.nextLine();
-        System.out.print("Nhap nha xuat ban: ");
-        nhaXuatBan = sc.nextLine();
-        System.out.print("Nhap nha cung cap: ");
-        nhaCungCap = sc.nextLine();
-        System.out.print("Nhap so luong: ");
-        soLuong = sc.nextInt();
-        sc.nextLine(); // Đọc bỏ dòng xuống hàng
-
+    
+        String loaiSach = null; 
+    
         switch (choice) {
             case 1:
-                System.out.print("Nhap so lop: ");
-                soLop = sc.nextLine();
-                books.add(new SGK(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLuong, soLop));
+                loaiSach = "SGK"; // Gán giá trị cho loaiSach là "SGK"
                 break;
             case 2:
-                System.out.print("Nhap the loai: ");
-                theLoai = sc.nextLine();
-                books.add(new Truyen(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLuong, theLoai));
+                loaiSach = "Truyen"; // Gán giá trị cho loaiSach là "Truyen"
                 break;
             case 3:
-                System.out.print("Nhap mon hoc: ");
-                monHoc = sc.nextLine();
-                books.add(new GiaoTrinh(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLuong, monHoc));
+                loaiSach = "GiaoTrinh"; // Gán giá trị cho loaiSach là "GiaoTrinh"
                 break;
             default:
                 System.out.println("Lua chon khong hop le!");
                 return;
         }
+    
+        // Tạo một đối tượng mới dựa trên loại sách đã chọn
+        Book newBook = null;
+    
+        switch (choice) {
+            case 1:
+                newBook = new SGK(); // Tạo mới sách giáo khoa
+                break;
+            case 2:
+                newBook = new Truyen(); // Tạo mới truyện
+                break;
+            case 3:
+                newBook = new GiaoTrinh(); // Tạo mới giáo trình
+                break;
+        }
+    
+        newBook.nhap(); 
+        newBook.setLoaiSach(loaiSach); // Gán giá trị cho loaiSach của sách vừa tạo
+        books.add(newBook); 
         System.out.println("Da them sach thanh cong!");
         ghiSachVaoFile(); // Ghi sách vào file sau khi thêm
     }
-
+    
+    
     // Phương thức để sửa sách
     public void suaSach() {
         System.out.print("Nhap ma sach can sua: ");
@@ -132,7 +129,7 @@ public class BookManager {
         for (Book book : books) {
             if (book.getMaSach().equals(maSach)) {
                 System.out.println("Nhap lai thong tin cho sach:");
-                book.nhap(); // Giả sử rằng phương thức nhap() sẽ cập nhật thông tin sách
+                book.nhap(); 
                 System.out.println("Da cap nhat thong tin sach.");
                 ghiSachVaoFile(); // Ghi vào file sau khi sửa
                 return;
@@ -162,7 +159,7 @@ public class BookManager {
         String search = sc.nextLine();
         for (Book book : books) {
             if (book.getMaSach().equalsIgnoreCase(search) || book.getTenSach().equalsIgnoreCase(search)) {
-                book.xuat(); // Hiển thị thông tin sách
+                book.xuat(); 
                 return;
             }
         }
@@ -175,10 +172,15 @@ public class BookManager {
             System.out.println("Danh sach sach rong!");
             return;
         }
-
-        System.out.println("============= DANH SACH SACH =============");
-        for (Book book : books) {
-            book.xuat(); // Giả sử rằng phương thức xuat() sẽ in ra thông tin sách
+        else{
+            System.out.println("============= DANH SACH SACH =============");
+            System.out.println("Dac tinh: SGK(soLop); Truyen(theLoai); GiaoTrinh(monHoc)");
+            System.out.format("%-10s %-20s %-15s %-10s %-15s %-15s %-10s %-15s %-10s\n",
+"Ma sach","Ten sach","Tac gia","Loai sach","Nha xuat ban","Nha cung cap","So luong","Dac tinh","Tinh trang");
+            for (Book book : books) {
+                book.xuat(); 
+                System.out.println("");
+            }
         }
     }
 
@@ -191,9 +193,9 @@ public class BookManager {
             System.out.println("2. Sua sach");
             System.out.println("3. Xoa sach");
             System.out.println("4. Tim kiem sach");
-            System.out.println("5. Hien thi danh sach sach"); // Thêm tùy chọn mới
+            System.out.println("5. Hien thi danh sach sach"); 
             System.out.println("6. Quay lai");
-        
+            System.out.print("Chon chuc nang:");
             choice = sc.nextInt();
             sc.nextLine(); // Đọc bỏ dòng xuống hàng
 
@@ -211,7 +213,7 @@ public class BookManager {
                     timKiemSach();
                     break;
                 case 5:
-                    hienThiDanhSach(); // Gọi phương thức hiển thị danh sách
+                    hienThiDanhSach(); 
                     break;
                 case 6:
                     System.out.println("Quay lai menu chinh.");
