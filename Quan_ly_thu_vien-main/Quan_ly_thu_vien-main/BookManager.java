@@ -30,7 +30,7 @@ public class BookManager {
                 int soLuong = Integer.parseInt(data[6].trim());
 
                 if (loaiSach.equals("SGK")) {
-                    String soLop = data[7].trim();
+                    int soLop = Integer.parseInt(data[6].trim());
                     books.add(new SGK(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, maNhaCungCap, soLuong, soLop));
                 } else if (loaiSach.equals("Truyen")) {
                     String theLoai = data[7].trim();

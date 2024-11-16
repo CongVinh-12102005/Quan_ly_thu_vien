@@ -1,9 +1,0 @@
-123,fsdf,sdf,SGK,sdf,sd,3,4
-124,dasds,dsfsd,Truyen,hfgh,dfh,4,vui
-125,sdfsd,fdfg,GiaoTrinh,gfdg,fhgh,4,toan
-101,Java Programming,Ren,SGK,Ren,Ren,4,3
-102,Java AAAA,Ren,SGK,Ren,Ren,3,4
-222,a,a,SGK,a,a,3,2
-129,aa,a,SGK,a,a,3,1
-333,t,t,SGK,t,t,3,2
-123,ren,ren,SGK,ren,ren,10,12

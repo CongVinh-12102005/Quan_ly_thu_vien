@@ -1,0 +1,13 @@
+231,�,fr,SGK,sr,3,3,3
+32,21,d,Truyen,d,f,2,e
+213,e,ru,SGK,ru,r,4,4
+3,2,ew,SGK,e,?,3,3
+3333,d,d,GiaoTrinh,d,d,3,g
+233,de,f,SGK,f,e,2,2
+1233,3,f,Truyen,f,g,5,t
+2,e,r,SGK,t,y,4,4
+33,e,r,Truyen,r,t,3,r
+2323,r,e,GiaoTrinh,f,g,3,r
+3,r,t,GiaoTrinh,f,d,3,r
+3,f,d,SGK,s,e,4,4
+u,f,e,SGK,d,s,2,1
