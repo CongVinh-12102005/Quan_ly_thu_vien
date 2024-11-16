@@ -2,8 +2,8 @@ import java.util.*;
 public class GiaoTrinh extends Book {
     private String monHoc;
 
-    public GiaoTrinh(String maSach, String tenSach, String tacGia, String loaiSach, String nhaXuatBan, String nhaCungCap, int soLuong, String monHoc) {
-        super(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLuong);
+    public GiaoTrinh(String maSach, String tenSach, String tacGia, String loaiSach, String nhaXuatBan, String maNhaCungCap, int soLuong, String monHoc) {
+        super(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, maNhaCungCap, soLuong);
         this.monHoc = monHoc;
     }
 
@@ -30,8 +30,8 @@ public class GiaoTrinh extends Book {
         setTacGia(sc.nextLine());
         System.out.print("Nhap nha xuat ban: ");
         setNhaXuatBan(sc.nextLine());
-        System.out.print("Nhap nha cung cap: ");
-        setNhaCungCap(sc.nextLine());
+        System.out.print("Nhap ma nha cung cap: ");
+        setmaNhaCungCap(sc.nextLine());
         System.out.print("Nhap so luong: ");
         setSoLuong(sc.nextInt());
         sc.nextLine(); 
@@ -47,7 +47,7 @@ public class GiaoTrinh extends Book {
             getTacGia(),
             getLoaiSach(),
             getNhaXuatBan(),
-            getNhaCungCap(),
+            getmaNhaCungCap(),
             getSoLuong(),
             getMonHoc(),
             getTinhTrang()

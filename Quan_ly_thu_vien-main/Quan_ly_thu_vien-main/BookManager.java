@@ -1,10 +1,11 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class BookManager {
-    private List<Book> books; 
+    private static List<Book> books; 
     private Scanner sc;
     private final String filePath = "book.txt"; 
 
@@ -15,7 +16,7 @@ public class BookManager {
     }
 
     // Phương thức đọc sách từ file
-    private void docSachTuFile() {
+    public void docSachTuFile() {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -25,18 +26,18 @@ public class BookManager {
                 String tacGia = data[2].trim();
                 String loaiSach = data[3].trim();
                 String nhaXuatBan = data[4].trim();
-                String nhaCungCap = data[5].trim();
+                String maNhaCungCap = data[5].trim();
                 int soLuong = Integer.parseInt(data[6].trim());
 
                 if (loaiSach.equals("SGK")) {
                     String soLop = data[7].trim();
-                    books.add(new SGK(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLuong, soLop));
+                    books.add(new SGK(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, maNhaCungCap, soLuong, soLop));
                 } else if (loaiSach.equals("Truyen")) {
                     String theLoai = data[7].trim();
-                    books.add(new Truyen(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLuong, theLoai));
+                    books.add(new Truyen(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, maNhaCungCap, soLuong, theLoai));
                 } else if (loaiSach.equals("GiaoTrinh")) {
                     String monHoc = data[7].trim();
-                    books.add(new GiaoTrinh(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLuong, monHoc));
+                    books.add(new GiaoTrinh(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, maNhaCungCap, soLuong, monHoc));
                 }
             }
         } catch (IOException e) {
@@ -45,7 +46,7 @@ public class BookManager {
     }
 
     // Phương thức ghi sách vào file (ghi đè)
-    private void ghiSachVaoFile() {
+    public void ghiSachVaoFile() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
             for (Book book : books) {
                 String line = book.getMaSach() + "," +
@@ -53,7 +54,7 @@ public class BookManager {
                         book.getTacGia() + "," +
                         book.getLoaiSach() + "," +
                         book.getNhaXuatBan() + "," +
-                        book.getNhaCungCap() + "," +
+                        book.getmaNhaCungCap() + "," +
                         book.getSoLuong();
 
                 if (book instanceof SGK) {
@@ -78,30 +79,39 @@ public class BookManager {
         System.out.println("1. Sach giao khoa (SGK)");
         System.out.println("2. Truyen");
         System.out.println("3. Giao trinh");
-        System.out.print("Chon loai sach:");
-        int choice = sc.nextInt();
-        sc.nextLine(); // Đọc bỏ dòng xuống hàng
+        
+        int choice;
+        while (true) { // Lặp lại cho đến khi nhập đúng lựa chọn
+            try {
+                System.out.print("Chon loai sach (1-3): ");
+                choice = sc.nextInt();
+                sc.nextLine(); // Xóa bộ đệm dòng
+                if (choice >= 1 && choice <= 3) {
+                    break; // Thoát khỏi vòng lặp nếu lựa chọn hợp lệ
+                } else {
+                    System.out.println("Lua chon khong hop le! Vui long chon lai.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Vui long nhap so hop le!");
+                sc.nextLine(); // Xóa bộ đệm để tránh lỗi lặp lại
+            }
+        }
     
-        String loaiSach = null; 
-    
+        String loaiSach = null;
         switch (choice) {
             case 1:
-                loaiSach = "SGK"; // Gán giá trị cho loaiSach là "SGK"
+                loaiSach = "SGK"; 
                 break;
             case 2:
-                loaiSach = "Truyen"; // Gán giá trị cho loaiSach là "Truyen"
+                loaiSach = "Truyen";
                 break;
             case 3:
-                loaiSach = "GiaoTrinh"; // Gán giá trị cho loaiSach là "GiaoTrinh"
+                loaiSach = "GiaoTrinh";
                 break;
-            default:
-                System.out.println("Lua chon khong hop le!");
-                return;
         }
     
         // Tạo một đối tượng mới dựa trên loại sách đã chọn
         Book newBook = null;
-    
         switch (choice) {
             case 1:
                 newBook = new SGK(); // Tạo mới sách giáo khoa
@@ -116,10 +126,12 @@ public class BookManager {
     
         newBook.nhap(); 
         newBook.setLoaiSach(loaiSach); // Gán giá trị cho loaiSach của sách vừa tạo
+        newBook.tangSoLuong();
         books.add(newBook); 
         System.out.println("Da them sach thanh cong!");
         ghiSachVaoFile(); // Ghi sách vào file sau khi thêm
     }
+    
     
     
     // Phương thức để sửa sách
@@ -165,6 +177,14 @@ public class BookManager {
         }
         System.out.println("Khong tim thay sach voi tu khoa: " + search);
     }
+    public Book timMuonSach(String maSach, String tenSach) {
+        for (Book book : books) {
+            if (book.getMaSach().equalsIgnoreCase(maSach) && book.getTenSach().equalsIgnoreCase(tenSach)) {
+                return book;
+            }
+        }
+        return null;
+    }
 
     // Phương thức để hiển thị danh sách sách
     public void hienThiDanhSach() {
@@ -176,12 +196,14 @@ public class BookManager {
             System.out.println("============= DANH SACH SACH =============");
             System.out.println("Dac tinh: SGK(soLop); Truyen(theLoai); GiaoTrinh(monHoc)");
             System.out.format("%-10s %-20s %-15s %-10s %-15s %-15s %-10s %-15s %-10s\n",
-"Ma sach","Ten sach","Tac gia","Loai sach","Nha xuat ban","Nha cung cap","So luong","Dac tinh","Tinh trang");
+"Ma sach","Ten sach","Tac gia","Loai sach","Nha xuat ban","Ma nha cung cap","So luong","Dac tinh","Tinh trang");
             for (Book book : books) {
                 book.xuat(); 
+                book.tangSoLuong();
                 System.out.println("");
             }
         }
+        System.out.println("Tong so luong sach hien co: " + Book.getSoLuongSach());
     }
 
     // Phương thức để chạy menu quản lý sách
@@ -195,10 +217,23 @@ public class BookManager {
             System.out.println("4. Tim kiem sach");
             System.out.println("5. Hien thi danh sach sach"); 
             System.out.println("6. Quay lai");
-            System.out.print("Chon chuc nang:");
-            choice = sc.nextInt();
-            sc.nextLine(); // Đọc bỏ dòng xuống hàng
-
+    
+            while (true) { // Vòng lặp yêu cầu nhập lại cho đến khi hợp lệ
+                try {
+                    System.out.print("Chon chuc nang (1-6): ");
+                    choice = sc.nextInt();
+                    sc.nextLine(); // Xóa bộ đệm dòng
+                    if (choice >= 1 && choice <= 6) {
+                        break; // Thoát khỏi vòng lặp khi lựa chọn hợp lệ
+                    } else {
+                        System.out.println("Lua chon khong hop le! Vui long chon lai.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Vui long nhap so hop le!");
+                    sc.nextLine(); // Xóa bộ đệm để tránh lỗi lặp lại
+                }
+            }
+    
             switch (choice) {
                 case 1:
                     themSach();
@@ -213,15 +248,12 @@ public class BookManager {
                     timKiemSach();
                     break;
                 case 5:
-                    hienThiDanhSach(); 
+                    hienThiDanhSach();
                     break;
                 case 6:
                     System.out.println("Quay lai menu chinh.");
                     break;
-                default:
-                    System.out.println("Lua chon khong hop le! Vui long chon lai.");
             }
         } while (choice != 6);
-    }
-
+    }    
 }

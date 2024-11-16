@@ -1,27 +1,35 @@
-public abstract class Book {
+public abstract class Book implements BookOperations {
+    private static int soLuongSach = 0;
+    
     private String maSach;
     private String tenSach;
     private String tacGia;
     private String loaiSach;
     private String nhaXuatBan;
-    private String nhaCungCap;
+    private String maNhaCungCap;
     private int soLuong;
     private String tinhTrang;
 
     // Constructor
-    public Book(String maSach, String tenSach, String tacGia, String loaiSach, String nhaXuatBan, String nhaCungCap, int soLuong) {
+    public Book(String maSach, String tenSach, String tacGia, String loaiSach, String nhaXuatBan, String maNhaCungCap, int soLuong) {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.tacGia = tacGia;
         this.loaiSach = loaiSach;
         this.nhaXuatBan = nhaXuatBan;
-        this.nhaCungCap = nhaCungCap;
+        this.maNhaCungCap = maNhaCungCap;
         this.soLuong = soLuong;
         this.tinhTrang = capNhatTinhTrang();
     }
-
+    public Book(){}
     // Constructor mặc định
-    public Book() {}
+    public void tangSoLuong() {
+        soLuongSach++;
+    }
+
+    public static int getSoLuongSach() {
+        return soLuongSach;
+    }
 
     protected String capNhatTinhTrang() {
         return soLuong > 0 ? "Con hang" : "Het hang";
@@ -67,12 +75,12 @@ public abstract class Book {
         this.nhaXuatBan = nhaXuatBan;
     }
 
-    public String getNhaCungCap() {
-        return nhaCungCap;
+    public String getmaNhaCungCap() {
+        return maNhaCungCap;
     }
 
-    public void setNhaCungCap(String nhaCungCap) {
-        this.nhaCungCap = nhaCungCap;
+    public void setmaNhaCungCap(String maNhaCungCap) {
+        this.maNhaCungCap = maNhaCungCap;
     }
 
     public int getSoLuong() {

@@ -1,22 +1,22 @@
 import java.util.*;
-public class Truyen extends Book {
-    private String theLoai;
+public class SGK extends Book {
+    private String soLop;
 
-    public Truyen(String maSach, String tenSach, String tacGia, String loaiSach, String nhaXuatBan, String nhaCungCap, int soLuong, String theLoai) {
-        super(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, nhaCungCap, soLuong);
-        this.theLoai = theLoai;
+    public SGK(String maSach, String tenSach, String tacGia, String loaiSach, String nhaXuatBan, String maNhaCungCap, int soLuong, String soLop) {
+        super(maSach, tenSach, tacGia, loaiSach, nhaXuatBan, maNhaCungCap, soLuong);
+        this.soLop = soLop;
     }
 
-    public Truyen() {
+    public SGK() {
         super();
     }
 
-    public String getTheLoai() {
-        return theLoai;
+    public String getSoLop() {
+        return soLop;
     }
 
-    public void setTheLoai(String theLoai) {
-        this.theLoai = theLoai;
+    public void setSoLop(String soLop) {
+        this.soLop = soLop;
     }
 
     @Override
@@ -30,13 +30,13 @@ public class Truyen extends Book {
         setTacGia(sc.nextLine());
         System.out.print("Nhap nha xuat ban: ");
         setNhaXuatBan(sc.nextLine());
-        System.out.print("Nhap nha cung cap: ");
-        setNhaCungCap(sc.nextLine());
+        System.out.print("Nhap ma nha cung cap: ");
+        setmaNhaCungCap(sc.nextLine());
         System.out.print("Nhap so luong: ");
         setSoLuong(sc.nextInt());
         sc.nextLine(); 
-        System.out.print("Nhap the loai: ");
-        this.theLoai = sc.nextLine();
+        System.out.print("Nhap so lop: ");
+        this.soLop = sc.nextLine();
     }
 
     @Override
@@ -47,9 +47,9 @@ public class Truyen extends Book {
             getTacGia(),
             getLoaiSach(),
             getNhaXuatBan(),
-            getNhaCungCap(),
+            getmaNhaCungCap(),
             getSoLuong(),
-            getTheLoai(),
+            getSoLop(),
             getTinhTrang()
         );
     }

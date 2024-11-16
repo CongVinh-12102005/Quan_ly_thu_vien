@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         BookManager bookManager = new BookManager(); 
+        LoanHistoryManager loanHistoryManager = new LoanHistoryManager();
         int choice;
 
         do {
@@ -37,7 +38,8 @@ public class Main {
                     System.out.println("Ban da chon quan ly nha cung cap. Chuc nang nay chua duoc trien khai.");
                     break;
                 case 4:
-                    System.out.println("Ban da chon quan ly lich su muon/tra. Chuc nang nay chua duoc trien khai.");
+                    System.out.println("Ban da chon quan ly lich su muon/tra.");
+                    loanHistoryManager.Management();
                     break;
                 case 5:
                     System.out.println("Da thoat chuong trinh!");
